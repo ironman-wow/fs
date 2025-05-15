@@ -1,9 +1,1 @@
-The prior art (Digitize-PID) focuses on the automatic digitization of existing, scanned P&ID images using computer vision techniques. Their 'Dataset-P&ID' is a synthetic collection of annotated P&ID images designed to train image processing models for recognizing visual elements like symbols and lines.
-
-Our invention is fundamentally different in its objective, data modality, and the type of model it aims to train:
-
-Textual & Instructional Datasets for Language Models, Not Image Data for Vision Models: Our pipeline generates a suite of textual, instructional synthetic datasets (Factual QA, DPO, SynDIP, LogiCore, Local & Global RAIT). This data is designed to train Small Language Models (SLMs) to understand, reason about, and generate textual descriptions of PFDs and PIDs. Digitize-PID's synthetic dataset consists of visual P&ID images with annotations for training computer vision models.
-
-Purpose: PFD/PID Generation & Interpretation by SLMs, Not Image Digitization: Our goal is to enable SLMs to analyze chemical processes and generate PFD/PID descriptions (potentially for novel processes), and to interpret existing textual process information. Digitize-PID aims to convert existing P&ID images into a digital data format.
-
-Diverse Suite of Textual Datasets for Comprehensive SLM Skill Development: We create six distinct types of textual datasets, each targeting specific capabilities (factual knowledge, reasoning, schematic description, etc.) required by an SLM for the complex PFD/PID engineering task. Digitize-PID's single dataset type (annotated images) serves the singular purpose of visual component recognition.
+c
