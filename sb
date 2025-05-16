@@ -1,18 +1,1 @@
-The prior art (ChemSafetyBench) introduces a benchmark dataset and evaluation framework designed to assess the safety and accuracy of LLM responses to queries about hazardous chemicals, their properties, uses, and basic synthesis. Its purpose is to evaluate existing LLMs, not primarily to train them for generative engineering tasks.
-
-Our invention's approach to extracting and utilizing multiple contexts for PFD/PID generation is fundamentally different in purpose and scope:
-
-Training Data for PFD/PID Generation, Not an Evaluation Benchmark for Chemical Safety: Our work focuses on generating a suite of instructional datasets (Factual QA, DPO, SynDIP, LogiCore, Local & Global RAIT) to train SLMs for the specific engineering task of PFD and PID interpretation, analysis, and generation. ChemSafetyBench is for evaluating LLM responses to safety-critical chemistry queries.
-
-Contexts and Responses Tailored for Process Engineering Design & Generation:
-
-Our datasets like SynDIP provide rich textual descriptions of entire chemical processes and their PFD/PID representations, serving as a target for generation.
-
-LogiCore trains SLMs to generate multi-step reasoning about PFD/PID design choices and control logic.
-
-RAIT enables grounded, multi-scale responses synthesized from PFD/PID relevant documents.
-This is distinct from ChemSafetyBench's focus on properties/synthesis of individual chemicals for safety assessment.
-
-Hierarchical Dataset Generation for Comprehensive Skill Building: A key aspect of our invention is the use of the synthetically generated SynDIP dataset as the primary context for creating other specialized training datasets like LogiCore and RAIT. This hierarchical approach to building generative capabilities in an SLM is not a feature of the ChemSafetyBench evaluation framework.
-
-Target Output – Generated PFD/PID Schematics: The goal of our diverse datasets is to enable an SLM to generate PFD and PID textual descriptions. ChemSafetyBench aims to output safety/accuracy scores for LLMs on specific chemical queries.
+c
