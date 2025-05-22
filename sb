@@ -1,2 +1,9 @@
-This "additional context" is not just general knowledge but targeted information precisely related to the user's query or the specific PFD/PID element being generated, pulled from the structured knowledge graph to ground the SLM's response in verified domain data, thereby enhancing accuracy and reducing reliance on potentially fallible parametric memory
-The "additional context" is dynamically retrieved, query-specific structured data from the chemical knowledge graph, comprising relevant entities (e.g., chemicals, equipment), their semantic relationships, and the original source text chunks describing them, all used to ground the SLM's initial response generation.
+Context retrieval from the knowledge graph in the Graph RAG framework is executed precisely as follows:
+
+The input query is embedded into a vector.
+
+This vector is used to identify and retrieve the top-K most semantically similar, pre-clustered communities within the knowledge graph by comparing against their embedded summaries.
+
+A dynamic subgraph is then constructed from these top-K communities, containing only the most query-relevant entities, their defined semantic relationships, and their linked source text chunks.
+
+This extracted, structured subgraph serves as the precise "additional context" provided to the SLM.
