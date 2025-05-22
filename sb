@@ -1,22 +1,2 @@
-In this invention, the SLM and a separate reward model (like NVIDIA Nemotron-4-340B) serve as distinct types of "judges" within the Critique-Agent's feedback loop to refine generated responses, ensuring accuracy and relevance through different mechanisms:
-
-SLM-as-a-Judge (e.g., GPT-4o/Haiku for qualitative critique):
-
-How it serves as a judge: An advanced, typically larger, SLM (different from the one being refined) is prompted with the generated response and specific criteria (e.g., "Is this PFD description factually accurate based on standard chemical engineering principles?", "Is the control logic in this PID coherent and safe?"). It uses its extensive pre-trained knowledge and reasoning capabilities to provide a qualitative assessment or critique, identifying potential errors, inconsistencies, or areas for improvement, often through natural language feedback or by scoring against predefined rubrics (like helpfulness, correctness, coherence, complexity, verbosity as seen in the Nemotron scoring).
-
-Ensuring accurate and relevant feedback: The accuracy and relevance of this feedback depend on the judging SLM's capabilities and the specificity of the prompting. By using powerful teacher LLMs (like GPT-4o) and well-designed critique prompts focused on key engineering aspects, the feedback can highlight specific flaws (e.g., incorrect unit operation sequence, missing safety interlock) that are directly relevant for refining the chemical process diagram description.
-
-Reward Model-as-a-Judge (e.g., NVIDIA Nemotron-4-340B):
-
-How it serves as a judge: This is a specialized model explicitly trained to predict a scalar score (or multiple scores for different dimensions like correctness, helpfulness) reflecting the quality of a given input (the SLM's generated response) based on human preferences or predefined criteria. It has learned to associate certain features of a response with higher or lower quality.
-
-Ensuring accurate and relevant feedback: The reward model's feedback is "accurate" in that it consistently applies the learned quality assessment function. Its "relevance" comes from being trained on data specifically related to the desired output characteristics (e.g., good vs. bad PFD/PID descriptions, correct vs. incorrect chemical facts). A high score from the reward model indicates the response aligns well with the learned quality criteria, while a low score signals a need for refinement. This quantitative feedback can be used to directly guide iterative improvements or filter out low-quality generations.
-
-Refining the Response:
-The feedback from both types of judges is used by the framework (often via the Meta-Agent or the SLM itself in a self-reflection step) to:
-
-Identify specific errors or weaknesses in the initial response.
-
-Guide the regeneration or revision of the response to address these issues. For instance, if the SLM-as-a-Judge points out a missing safety valve, the framework can prompt the SLM to include it. If the reward model gives a low correctness score, the framework might try a different generation strategy or prompt.
-
-By employing both qualitative (SLM-as-a-Judge) and quantitative (Reward Model) feedback, the system gets a comprehensive assessment, enabling more targeted and effective refinement of the generated PFD/PID descriptions to ensure they are accurate, relevant, and meet engineering standards.
+This "additional context" is not just general knowledge but targeted information precisely related to the user's query or the specific PFD/PID element being generated, pulled from the structured knowledge graph to ground the SLM's response in verified domain data, thereby enhancing accuracy and reducing reliance on potentially fallible parametric memory
+The "additional context" is dynamically retrieved, query-specific structured data from the chemical knowledge graph, comprising relevant entities (e.g., chemicals, equipment), their semantic relationships, and the original source text chunks describing them, all used to ground the SLM's initial response generation.
