@@ -1,1 +1,8 @@
 The plot shows strong scores in helpfulness, correctness, and coherence, indicating well-formed answers, while lower scores in complexity and verbosity suggest simpler, more concise responses.
+The plot highlights strong performance in coherence, correctness, and helpfulness, while scores for complexity and verbosity are comparatively lower, indicating areas that may require further enrichment or elaboration.
+The plot reveals that while coherence remains relatively strong, the rejected responses perform poorly on helpfulness, correctness, complexity, and verbosity — highlighting major deficiencies in both informational value and expression quality.
+The scores reveal strong performance in coherence and overall informativeness, while slightly lower scores in complexity and verbosity indicate that the descriptions are well-structured but may lean toward simpler, more concise phrasing.
+The plot shows high coherence and moderate complexity/verbosity, suggesting that the dataset captures logical reasoning with reasonably detailed explanations, though helpfulness and correctness could be improved for deeper instructional utility.
+The figure shows strong performance in coherence, correctness, and helpfulness, indicating the effectiveness of the retrieval-augmented strategy, though lower complexity and verbosity scores suggest answers are direct but may lack elaboration.
+The chart highlights strong coherence and correctness, affirming sound integration across multiple sources, while lower complexity and verbosity suggest that the responses prioritize clarity and conciseness over detailed elaboration.
+
