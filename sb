@@ -1,9 +1,1 @@
-Context retrieval from the knowledge graph in the Graph RAG framework is executed precisely as follows:
-
-The input query is embedded into a vector.
-
-This vector is used to identify and retrieve the top-K most semantically similar, pre-clustered communities within the knowledge graph by comparing against their embedded summaries.
-
-A dynamic subgraph is then constructed from these top-K communities, containing only the most query-relevant entities, their defined semantic relationships, and their linked source text chunks.
-
-This extracted, structured subgraph serves as the precise "additional context" provided to the SLM.
+The SLM doesn't ask for a specific amount of context. The Graph RAG retrieval process determines the quantity and content of the context based on its configuration (e.g., top-K parameter, subgraph construction logic) and the constraints of the SLM's input window. The SLM is then trained to make the best use of whatever relevant (or less relevant) context it is given by the retrieval system.
