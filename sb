@@ -1,1 +1,13 @@
-"instruction tuning" in this invention is a multi-faceted process. It starts with broader QA fine-tuning using datasets like Factual QA, SynDIP, and LogiCore to teach the SLM fundamental instruction-following and domain-specific knowledge application, and can then be specialized further with RAIT to master context-grounded generatio
+In this invention, "width/depth pruning" is an optional model compression technique applied after the Small Language Model (SLM) has been fine-tuned. It's done by:
+
+Calculating Importance Scores: For each neuron (for width pruning) and each transformer layer (for depth pruning), an importance score is computed, typically based on its contribution to the task loss (e.g., using gradient-based heuristics) during the fine-tuning process.
+
+Removing Less Critical Components:
+
+Width Pruning: Neurons within the Feed-Forward Network (FFN) layers with the lowest importance scores are systematically removed, reducing the FFN's intermediate dimensionality.
+
+Depth Pruning: Entire transformer blocks (layers) with the lowest importance scores are removed from the SLM.
+
+Differentiable Pruning (for joint optimization): The framework can employ differentiable pruning using binary gates (relaxed via Gumbel-Softmax) during fine-tuning, allowing the model to learn which neurons and layers to prune as part of the optimization objective, balancing task performance with sparsity.
+
+This process reduces the SLM's size and computational cost for inference with minimal impact on accuracy by selectively removing less influential parameters and structures.
