@@ -1,1 +1,9 @@
-The SLM doesn't ask for a specific amount of context. The Graph RAG retrieval process determines the quantity and content of the context based on its configuration (e.g., top-K parameter, subgraph construction logic) and the constraints of the SLM's input window. The SLM is then trained to make the best use of whatever relevant (or less relevant) context it is given by the retrieval system.
+The knowledge graph is required when the SLM needs to generate responses or PFD/PID elements that demand:
+
+High Factual Precision: Accessing specific, verifiable details (e.g., chemical properties, equipment specs) not reliably stored in the SLM's parameters.
+
+Complex Relational Reasoning: Understanding and navigating intricate, domain-specific connections between entities (e.g., process dependencies, control logic).
+
+Information Provenance: Grounding outputs in identifiable source data from the curated knowledge base.
+
+Current or Niche Domain Knowledge: Utilizing specialized or updated information beyond the SLM's general pre-training.
