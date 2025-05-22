@@ -1,1 +1,2 @@
-c
+In this invention, "Initial DPO alignment" refers to an early fine-tuning stage where the Small Language Model (SLM), typically after foundational supervised fine-tuning, is trained using the Direct Preference Optimization algorithm on a curated dataset of chemical process engineering-related prompts paired with 'chosen' (preferred) and 'rejected' (dispreferred) responses.
+This process directly optimizes the SLM to favor the generation of outputs that are more accurate, coherent, and aligned with engineering best practices, establishing a better behavioral baseline before subsequent, more complex task-specific instruction tuning or reinforcement learning.
