@@ -1,1 +1,11 @@
-c
+The present synthetic dataset generation process offers significant advantages by directly reversing the challenges of existing data availability for PFDs and PIDs:
+
+Overcomes Proprietary Barriers & Increases Volume: By synthetically generating data (Factual QA, SynDIP, LogiCore, DPO, RAIT), it bypasses the need for confidential industrial diagrams, enabling the creation of large-scale, diverse datasets essential for robust model training, which is otherwise impossible due to IP restrictions.
+
+Ensures Completeness, Detail, and Modern Relevance: Unlike simplified public diagrams, the synthetic datasets, particularly SynDIP, are designed to be comprehensive, detailed, and reflective of industrial-scale process complexities and modern engineering standards, providing richer training material.
+
+Provides Structured, Machine-Readable Format: The datasets are inherently generated in a structured format (e.g., QA pairs, instruction-response, text-based process descriptions), making them immediately suitable for training language models without requiring complex and error-prone extraction from image-based or proprietary CAD formats.
+
+Targets Specific Cognitive Skills Systematically: The distinct yet interdependent datasets (Factual QA for facts, SynDIP for descriptions, LogiCore for reasoning, DPO for preference, RAIT for grounded generation) are purposefully designed to systematically teach the varied cognitive skills needed for PFD/PID mastery, addressing the scarcity of specialized training corpora for these individual yet crucial capabilities.
+
+Enforces Consistency and Standardization: The controlled generation process ensures consistency in format, terminology, and level of detail across the synthetic datasets, facilitating more effective learning and generalization for the SLMs, unlike the heterogeneous nature of scattered existing data.
