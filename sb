@@ -1,1 +1,4 @@
-c
+TCS InTwin is a robust, AI-powered digital twin platform used across various industrial domains for predictive maintenance, diagnostics, and operations optimization.
+While it supports over 120 algorithms for condition monitoring and anomaly detection, there is a growing need to integrate deeper, goal-driven optimization strategies.
+Our proposed enhancement introduces an agentic module that embeds optimization intelligence into InTwin, enabling it to solve complex scheduling and resource allocation problems dynamically.
+This proposal outlines the framework, components, stakeholders, and strategic opportunity behind this transformative capability.
