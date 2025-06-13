@@ -1,5 +1,10 @@
-Project Origin: Emerged from gaps observed in batch and continuous process industries where optimization is traditionally done offline or manually.
-Contextual Relevance: Designed for sectors such as chemicals, petrochemicals, power, and manufacturing, where real-time scheduling, job allocation, and constrained resource planning are critical.
-Research Basis: Built on proven optimization techniques like NSGA-II/III, flow shop and job shop scheduling, and metaheuristics like GA, SA, PSO.
-Integration Scope: Will be embedded into InTwin as a modular optimization layer—compatible with its SaaS architecture and microservices interfaces.
-Long-term Vision: Move towards fully autonomous digital twins that not only monitor and predict but also optimize operations with minimal human intervention.
+Challenges:
+Dynamically identifying the right optimization solver for different industrial problems.
+Incorporating constraints, domain heuristics, and multiple conflicting objectives.
+Integrating with real-time data streams from IoT sensors and enterprise systems.
+Ensuring explainability and traceability of optimization outcomes in safety-critical environments.
+Core Ideas:
+Use of a meta-agent layer to route problems to the most suitable optimization solver.
+Modular sub-agents for specialized optimization contexts (scheduling, energy use, emissions control).
+Feedback-driven learning and agent selection based on past problem similarity and performance.
+Visualization dashboards for engineers to interact with and validate optimization results.
