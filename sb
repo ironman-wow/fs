@@ -1,29 +1,28 @@
-Defect Source Detection in Semiconductor Manufacturing Using
-GenAI-Based Image and Video Analytics
+Virtual Metrology for Quality Control in Semiconductor Manufac-
+turing Using AI
 The Context
-Semiconductor manufacturing (fabs) involves highly precise and defect-sensitive processes such as wafer
-fabrication, lithography, etching, and packaging.
-• Each wafer undergoes hundreds of inspection steps, generating high-resolution images and videos.
-– Inspection: “Is there anything wrong here?” — detecting visible defects or anomalies.
-• These data are vital for identifying defect sources, monitoring process quality, and ensuring alignment.
-2
-• Manual and rule-based systems often fail to capture rare, subtle, or evolving defect modes and require
-constant reprogramming.
-• Video feeds also hold insights on operational inefficiencies, equipment anomalies, and safety violations
-— but remain underutilized.
+Virtual Metrology (VM) is an AI-driven technique that predicts wafer measurements without physical
+testing. It uses real-time process data (e.g., sensor readings, equipment parameters) and machine learning to
+estimate key quality metrics (e.g., film thickness, etch depth, critical dimensions) that traditionally require
+slow, costly metrology tools.
+In semiconductor fabs, physical metrology ensures wafers meet specifications but is expensive, time-
+consuming, and samples only a fraction of wafers. At the same time, fabs generate abundant real-time
+process data that correlates with wafer quality but remains underutilized.
 The Challenge
-• Rare and novel defect sources often go undetected or misclassified, while false positives/negatives
-increase scrap and rework.
-• Traditional models degrade over time due to process drifts and evolving defect modes.
-• Identifying root causes of observed defects across steps is complex and time-consuming.
-• High-resolution image/video streams are difficult to analyze consistently and at scale.
-• Video monitoring for operational anomalies remains largely manual and reactive.
+• Physical metrology introduces delays, high costs, and limited sampling.
+• Undetected process drifts can lead to scrap and yield loss.
+• High-dimensional, noisy process data and variability make modeling challenging, and models degrade
+over time.
+3
 Objectives
-• Detect and trace defect sources, including novel and rare patterns, with high accuracy.
-• Minimize false alarms, scrap, and rework while improving traceability.
-• Continuously adapt to process changes and emerging failure modes.
-• Automate real-time monitoring of equipment and operations for quality assurance.
-• Scale analytics effectively across large, high-volume image and video datasets.
+• Predict wafer quality metrics directly from real-time process data, enabling 100% virtual coverage.
+• Provide fast, robust, and adaptive feedback for process control and yield improvement.
+• Reduce metrology costs and improve throughput without compromising quality.
 Solution Approach
-Deploy a GenAI-powered image and video analytics platform to detect, trace, and explain defect sources and
-operational anomalies in real time, while adapting to evolving processes and minimizing false alarms.
+Deploy an AI-powered Virtual Metrology system that predicts wafer quality outcomes from process and equip-
+ment data using advanced DL techniques — to model complex dependencies, adapt to drift, and deliver fast,
+accurate predictions.
+Benefits
+• Faster feedback and timely corrective actions.
+• 100% wafer monitoring, improved yield, and process stability.
+• Lower metrology costs with higher confidence in quality assurance.
