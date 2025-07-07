@@ -1,1 +1,34 @@
-v
+Scheduling and Dispatching in Semiconductor Fabs
+The Context
+A semiconductor factory (fab) produces chips by processing silicon wafers through hundreds of precise
+manufacturing steps.
+• Wafers move in batches, called lots, with each lot containing multiple wafers.
+• After each processing step, lots wait in queues before moving to the next step. This waiting inventory is
+called Work-In-Process (WIP).
+• Lots must share expensive, specialized machines (such as lithography and etching tools), which typically
+handle only one lot at a time.
+• Some lots, known as hot lots, are high-priority due to customer deadlines or critical orders.
+• The fab environment is dynamic: machines can fail, hot lots can arrive unexpectedly, and queues can grow
+unpredictably.
+The Challenge
+Deciding which lot to send to which machine and when is known as scheduling and dispatching. Poor
+decisions can lead to:
+• Long waiting times for lots, increasing cycle time.
+• Idle machines, wasting costly resources.
+• Hot lots missing their deadlines.
+• Bottlenecks and congestion at certain machines.
+Objectives
+The main goals of effective scheduling and dispatching are:
+• Minimize total waiting and processing time for lots.
+• Maximize machine utilization and productivity.
+• Ensure high-priority (hot) lots are completed on time.
+• Adapt schedules quickly to real-time changes, such as equipment failures or rush orders.
+Benefits
+Achieving these objectives provides significant benefits:
+• Faster delivery of critical orders.
+• Higher factory throughput and efficiency.
+• Greater flexibility and resilience in operations.
+Solution Approach
+Use reinforcement learning, machine learning, and optimization algorithms to build an adaptive scheduling
+and dispatching system that prioritizes hot lots, balances machine utilization, and dynamically responds to
+real-time fab conditions to minimize cycle time and maximize efficiency.
