@@ -1,28 +1,35 @@
-Virtual Metrology for Quality Control in Semiconductor Manufac-
-turing Using AI
+AI-Driven Predictive Process Control and Maintenance in Semi-
+conductor Manufacturing
 The Context
-Virtual Metrology (VM) is an AI-driven technique that predicts wafer measurements without physical
-testing. It uses real-time process data (e.g., sensor readings, equipment parameters) and machine learning to
-estimate key quality metrics (e.g., film thickness, etch depth, critical dimensions) that traditionally require
-slow, costly metrology tools.
-In semiconductor fabs, physical metrology ensures wafers meet specifications but is expensive, time-
-consuming, and samples only a fraction of wafers. At the same time, fabs generate abundant real-time
-process data that correlates with wafer quality but remains underutilized.
+Semiconductor manufacturing requires tightly controlled processes and high equipment uptime to ensure
+wafer quality, yield, and productivity.
+• Equipment parameters like gas flow, temperature, and pressure must be optimized in real time to
+maintain process stability and avoid deviations.
+• Equipment failures (e.g., in pumps, valves, robots) can cause unexpected downtime, scrap, and yield
+loss.
+• Modern fabs collect rich sensor and operational data that can enable AI-driven predictions and proac-
+tive interventions.
 The Challenge
-• Physical metrology introduces delays, high costs, and limited sampling.
-• Undetected process drifts can lead to scrap and yield loss.
-• High-dimensional, noisy process data and variability make modeling challenging, and models degrade
-over time.
-3
+• Process parameters can drift due to wear, contamination, or environmental changes, degrading wafer
+quality and yield.
+• Traditional process control is reactive and struggles to adjust to dynamic variations quickly.
+• Equipment failures are often detected too late, leading to unplanned downtime, costly repairs, and
+production losses.
+• Manual monitoring of large volumes of sensor data is infeasible and error-prone.
 Objectives
-• Predict wafer quality metrics directly from real-time process data, enabling 100% virtual coverage.
-• Provide fast, robust, and adaptive feedback for process control and yield improvement.
-• Reduce metrology costs and improve throughput without compromising quality.
+• Predict wafer measurements and adjust process parameters dynamically to maintain stability and
+maximize yield.
+• Detect early signs of equipment degradation and schedule maintenance proactively before failures occur.
+• Improve process consistency, reduce scrap, and enhance equipment availability.
+• Leverage existing sensor and operational data streams effectively.
+4
 Solution Approach
-Deploy an AI-powered Virtual Metrology system that predicts wafer quality outcomes from process and equip-
-ment data using advanced DL techniques — to model complex dependencies, adapt to drift, and deliver fast,
-accurate predictions.
+Deploy AI-driven predictive process control and predictive maintenance systems that use machine learning
+models (e.g., regression, deep learning, anomaly detection) to analyze real-time sensor and equipment data,
+optimize process parameters dynamically, and identify early signs of equipment failure for planned mainte-
+nance.
 Benefits
-• Faster feedback and timely corrective actions.
-• 100% wafer monitoring, improved yield, and process stability.
-• Lower metrology costs with higher confidence in quality assurance.
+• Improved wafer quality and maximized yield through dynamic process optimization.
+• Reduced process deviation and scrap rates.
+• Increased equipment uptime and reduced unplanned maintenance costs.
+• Higher productivity and more stable operations.
