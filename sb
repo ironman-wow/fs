@@ -1,34 +1,28 @@
-Scheduling and Dispatching in Semiconductor Fabs
-The Context
-A semiconductor factory (fab) produces chips by processing silicon wafers through hundreds of precise
-manufacturing steps.
-• Wafers move in batches, called lots, with each lot containing multiple wafers.
-• After each processing step, lots wait in queues before moving to the next step. This waiting inventory is
-called Work-In-Process (WIP).
-• Lots must share expensive, specialized machines (such as lithography and etching tools), which typically
-handle only one lot at a time.
-• Some lots, known as hot lots, are high-priority due to customer deadlines or critical orders.
-• The fab environment is dynamic: machines can fail, hot lots can arrive unexpectedly, and queues can grow
-unpredictably.
-The Challenge
-Deciding which lot to send to which machine and when is known as scheduling and dispatching. Poor
-decisions can lead to:
-• Long waiting times for lots, increasing cycle time.
-• Idle machines, wasting costly resources.
-• Hot lots missing their deadlines.
-• Bottlenecks and congestion at certain machines.
-Objectives
-The main goals of effective scheduling and dispatching are:
-• Minimize total waiting and processing time for lots.
-• Maximize machine utilization and productivity.
-• Ensure high-priority (hot) lots are completed on time.
-• Adapt schedules quickly to real-time changes, such as equipment failures or rush orders.
+Automated Material Handling Systems (AMHS): Routing and Col-
+lision Avoidance for OHTs
+Semiconductor factories (fabs) rely heavily on Overhead Hoist Transport (OHT) systems to automat-
+ically move silicon wafers between processing tools. OHTs operate on an overhead rail network and carry
+wafer containers (Front Opening Unified Pods — FOUPs), enabling fully automated and continuous material
+handling.
+However, the highly complex and dynamic environment of a fab creates significant operational challenges
+for OHT systems, which can reduce throughput, increase wafer cycle time, and risk wafer damage.
+Key challenges specific to OHTs include:
+• Traffic congestion at intersections and shared track segments, creating bottlenecks and delays.
+• Rigid, static routing, which fails to adapt to changing fab conditions such as congestion or tool avail-
+ability.
+• Inefficient FOUP dispatching and hot-lot prioritization, causing delays in urgent orders and starving
+critical tools.
+• Lack of dynamic rerouting when a track segment becomes blocked or a tool goes down.
+• Collisions or near-misses at junctions or merge points, increasing risk to wafer quality and equipment.
+These challenges highlight the need for intelligent, adaptive, and coordinated control of OHT systems,
+improving fab efficiency, responsiveness to dynamic conditions, and operational safety.
 Benefits
-Achieving these objectives provides significant benefits:
-• Faster delivery of critical orders.
-• Higher factory throughput and efficiency.
-• Greater flexibility and resilience in operations.
+• Dynamic Routing: AI adapts paths in real-time to avoid congestion and blocked tracks.
+• Hot-Lot Prioritization: Ensures urgent wafers move faster, reducing cycle time.
+• Collision Prevention: RL minimizes near-misses at junctions for safer operations.
+• Tool Starvation Avoidance: Smart dispatching keeps critical tools supplied.
+• Scalability: Handles growing OHT fleets without manual tweaks.
+• Cost Savings: Fewer delays, less wafer damage, and lower downtime.
 Solution Approach
-Use reinforcement learning, machine learning, and optimization algorithms to build an adaptive scheduling
-and dispatching system that prioritizes hot lots, balances machine utilization, and dynamically responds to
-real-time fab conditions to minimize cycle time and maximize efficiency.
+Develop an intelligent, adaptive control framework using reinforcement learning and predictive model-
+ing to optimize routing, dispatching, and collision avoidance of OHT systems in dynamic fab environments.
