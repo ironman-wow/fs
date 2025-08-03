@@ -12,11 +12,12 @@ Slide 2: The Challenge with Retrieval-Augmented Generation (RAG)
 •  RAG's Solution (But with Limitations):
 •	Retrieval-Augmented Generation (RAG) introduced a retrieval mechanism: fetch relevant documents → pass them as context → generate an answer for the user query.
 •	This helps LLMs "ground" their responses on external sources at runtime, without re-training.
-•	However, RAG does not adapt the language model's parameters to retrieval usage; it's simply augmenting inputs.
-Retrieval augmented fine tuning (RAFT) is needed because:
+•	However, RAG does not teach the LLM how to make use of external information to generate accurate response.
+
+•	Retrieval augmented fine tuning (RAFT) is needed because:
 •	It explicitly fine-tunes the LLM to process, reason over, and generate responses based on retrieved documents for generating faithful responses.
-•	RAFT teaches the model how to align its outputs with the retrieved evidence.
-•	It reduces hallucinations, improves factual accuracy, and ensures the model doesn’t “make up” things outside the given evidence.
+•	RAFT teaches the LLM how to align its outputs with the retrieved evidence.
+•	It reduces hallucinations, improves factual accuracy, and ensures the LLM doesn’t “make up” things outside the given evidence.
 Problems with RAFT utilizing language modeling Loss:
 •	Treats all retrieved documents equally — cannot prioritize relevant documents.
 •	Optimizes at token-level, not sequence-level response quality.
@@ -26,41 +27,42 @@ Problems with RAFT utilizing language modeling Loss:
 •	RL based learning should optimize response-level faithfulness and relevance, not just token accuracy which is robust against noisy retrievals.
 Problems with Traditional RAG:
 •  No Awareness of “Information Gaps”
-•	The model cannot tell when it is unsure or lacking information while answering a question.
+•	The LLM cannot tell when it is unsure or lacking information while answering a question.
 •	It doesn’t know when it needs help from external documents.
 •  Fixed Retrieval Timing
-•	Because of this, documents are retrieved at pre-set points, either before answering starts or after fixed steps.
-•	The model cannot decide to retrieve at the right moment when it actually needs more information.
+•	documents are retrieved at pre-set points, either before answering starts or after fixed steps.
+•	The LLM cannot decide to retrieve at the right moment when it actually needs more information.
 •  Wastes Resources with Unnecessary Retrievals
-•	Sometimes, retrievals happen even when the model already has the necessary information.
+•	Sometimes, retrievals happen even when the LLM already has the necessary information.
 •	This leads to wasted computational resources and slows down response times.
-•  Weak at Forming Good Search Queries
-•  For complex questions, the model may need more information during answer generation.
-•  there is a need for generating additional retrieval queries helps the model fetch missing or more specific information needed to complete complex, multi-step responses accurately.
+•  Poor at Forming Good Search Queries
+•  For complex questions, the LLM may need more information during answer generation.
+•  there is a need for generating additional retrieval queries which helps the LLM fetch missing or more specific information needed to complete complex, multi-step responses accurately.
 •  Can’t Adjust During Answering
-•	Once documents are retrieved, the model cannot update or correct the retrievals later, even if it realizes mid-way that it needs different or better information.
+•	Once documents are retrieved, the LLM cannot update or correct the retrievals later, even if it realizes mid-way that it needs different or better information.
 •	This limits its ability to answer evolving or complex queries correctly.
 
 
 
 ________________________________________
 Slide 3: Our Proposed Framework: A Unified Solution
-We present a lightweight, modular framework compatible with any Transformer-based LLM without requiring additional training. It integrates two complementary techniques:
+We present a lightweight, modular framework compatible with any Transformer-based LLM without requiring additional training to effectively help LLMs reason over retrieved information, retrieve only when necessary, and generate faithful, efficient, and accurate responses.
+. It integrates two complementary techniques:
 •	Policy-Optimized Retrieval-Augmented Generation (PORAG):
 
-o	PORAG (RL based fine-tuning technique) teaches LLMs how to use external retrieved information effectively by optimizing,  how to use retrieved documents during response generation.
+o	PORAG (RL based fine-tuning technique) teaches LLMs how to use external retrieved information effectively to generate accurate response.
 •	Adaptive Token-Layer Attention Scoring (ATLAS):
-•  Detects when and what to retrieve by analyzing the model’s internal attention patterns.
+•  Detects when and what to retrieve by analyzing the LLM’s internal attention patterns.
 •  Ensures retrieval happens only when needed, improving efficiency & relevance
 This core is enhanced by:
 CRITIC (Cache Reduction via Token-Importance Compression)
 •	Why it's needed: As context length grows, the model's KV cache becomes memory-heavy and slows down inference, making long-document reasoning inefficient.
 •	What CRITIC does: Dynamically removes less important tokens (based on attention scores) from the KV cache, ensuring faster, memory-efficient inference without losing essential context.
 Test-Time Inference Scaling Techniques:
-•	Depending on the complexity of the query, the model adjusts how deeply it reasons:
+•	Depending on the complexity of the query, the LLM adjusts how deeply it reasons:
 o	For simple tasks, it gives fast responses with minimal computation.
 o	For complex tasks, it increases reasoning depth (more compute) to improve accuracy.
-•	Techniques like Self-Consistency, Best-of-N Sampling, and Monte Carlo Tree Search (MCTS) are used to refine outputs at test time, trading extra compute for better quality without retraining the model.
+•	Techniques like Self-Consistency, Best-of-N Sampling, and Monte Carlo Tree Search (MCTS) are used to refine outputs at test time, trading extra compute for better quality without retraining the LLM.
 
 •	•  Self-Consistency:
 Generate many answers → Choose the most common one.
@@ -68,3 +70,56 @@ Generate many answers → Choose the most common one.
 Generate N answers → Pick the best quality one.
 •	•  Monte Carlo Tree Search (MCTS):
 Search through possible response paths → Find the best reasoning route.
+
+ ________________________________________
+________________________________________
+________________________________________
+Slide 7: Experimental Setup
+•	Datasets: Three diverse benchmark datasets spanning distinct reasoning tasks:
+1.	HotpotQA: Contains Multi-hop question answering based on Wikipedia, each requires reasoning across multiple supporting documents to answer.
+2.	Gorilla: 
+o	Built to test tool usage capabilities of LLMs and reduce hallucination in function calling.
+o	Models must generate correct API calls based on natural language instructions 
+
+3.	PubMedQA: Biomedical question answering over scientific literature.
+Focuses on answering yes/no/maybe research questions using PubMed database(biomedical research articles)
+•	Models: Qwen2.5 (0.5B/1.5B/3B) and Llama 3.2 (1B/3B).
+•	Evaluation Metrics:
+o	HotpotQA uses EM and F1 scores for answers and supporting facts, with Joint EM/F1 assessing both together.
+o	Gorilla is evaluated by Overall Accuracy (AST match), Hallucination Errors for made-up APIs, and Wrong API Call Errors for incorrect API usage.
+o	PubMedQA is evaluated using Ternary Classification Accuracy and F1 Score across Yes, No, and Maybe answers.________________________________________
+Slide 8: Results: HotpotQA Performance
+(Insert Table 1 from the paper here)
+Model	Answer Prediction (EM)	Answer Prediction (F1)	Supporting Facts (EM)	Supporting Facts (F1)	Joint (EM)	Joint (F1)
+PORAG+ATLAS (Proposed)	65.37	78.40	60.21	82.01	45.29	71.32
+RAG-base	52.10	64.02	44.21	61.28	34.88	49.10
+Key Findings:
+•	Our proposed PORAG+ATLAS framework achieves state-of-the-art results.
+•	It delivers substantial improvements over the RAG-base baseline, with a +10.41% increase in Joint EM and a +22.22% increase in Joint F1.
+•	This demonstrates superior performance in both retrieval precision and generation accuracy.
+________________________________________
+Slide 9: Results: Gorilla & PubMedQA Performance
+(Insert Table 2 and Table 3 from the paper here)
+Gorilla: API-Aware Code Generation
+| Model | Overall Accuracy (%) | Hallucination Error (%) | Wrong API Call Error (%) |
+| :--- | :--- | :--- | :--- |
+| PORAG+ATLAS (Proposed) | 76.38 | 5.31 | 4.98 |
+| RAG-base | 62.12 | 10.70 | 9.58 |
+•	Finding: Achieves 76.38% accuracy while reducing critical errors by nearly half compared to the baseline.
+PubMedQA: Biomedical Reasoning
+| Model | Accuracy (%) | F1 Score (%) |
+| :--- | :--- | :--- |
+| PORAG+ATLAS (Proposed) | 78.35 | 74.56 |
+| RAG-base | 60.70 | 59.30 |
+•	Finding: Outperforms RAG-base by +17.65% in accuracy and +15.26% in F1 score.
+________________________________________
+Slide 10: Conclusion
+We presented a plug-and-play, integrated framework that enhances RAG systems through the synergistic combination of PORAG and ATLAS.
+•	Proven Performance: Our approach demonstrates significant improvements in factual accuracy, reduction of hallucinations, and computational efficiency across diverse and challenging benchmarks.
+•	Flexible and Scalable: The framework is a lightweight and scalable solution compatible with any Transformer-based language model.
+•	Impact: This work represents a substantial advancement for developing robust, efficient, and scalable RAG systems for real-world, knowledge-intensive NLP tasks.
+________________________________________
+Slide 11: Thank You & Questions
+Thank you for your attention.
+Questions?
+
