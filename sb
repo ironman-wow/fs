@@ -1,29 +1,70 @@
-AI-Driven Recipe Optimization in Semiconductor Manufacturing
-The Context
-In semiconductor manufacturing, a recipe defines the precise process settings (e.g., gas flow, RF power,
-pressure, temperature) and sequences executed by tools during wafer processing steps like etching, deposition,
-or annealing.
-• Recipes directly impact wafer quality, yield, and tool productivity.
-• Traditionally, recipes are developed and tuned through manual, trial-and-error experimentation, which
-is time-consuming and suboptimal.
-• As product complexity and variability increase, efficient and adaptive recipe optimization becomes
-critical for maintaining productivity and quality.
-The Challenge
-• Manual recipe development is slow, costly, and prone to suboptimal settings.
-• Process interactions are highly complex and nonlinear, making it difficult to predict outcomes of
-parameter changes.
-• Finding optimal trade-offs between competing objectives (e.g., uniformity vs. throughput) is challeng-
-ing.
-• Variations in tools, products, and environments require frequent retuning.
-Objectives
-• Automatically generate optimal process recipes that achieve target wafer specifications and maximize
-yield.
-• Reduce recipe development time and engineering effort.
-• Adapt recipes to new products, tools, and conditions efficiently.
-• Balance competing objectives like wafer quality, cycle time, and throughput.
-5
-Solution Approach
-Deploy an AI-driven recipe optimization platform that leverages process simulations, predictive models, and
-optimization algorithms (e.g., Bayesian optimization, reinforcement learning) to explore the process param-
-eter space, predict outcomes, and generate optimal recipes that meet desired specifications and improve pro-
-ductivity.
+Slide 1: Title Slide
+Scaling Test-Time Inference with Policy-Optimized, Dynamic Retrieval-Augmented Generation via KV Caching and Decoding
+Authors: Sakhinana Sagar Srinivas, Shivam Gupta, Akash Das, Venkataramana Runkana
+Affiliation: Tata Research
+Conference: ACM KDD 2025, Toronto
+________________________________________
+Slide 2: The Challenge with Retrieval-Augmented Generation (RAG)
+
+•  Problem with Static Knowledge in LLMs:
+•	Pre-trained LLMs are trained on static datasets and can't dynamically incorporate up-to-date or domain-specific information.
+•	Fine-tuning LLMs helps, but it’s computationally expensive, slow, and still suffers from knowledge cut-off.
+•  RAG's Solution (But with Limitations):
+•	Retrieval-Augmented Generation (RAG) introduced a retrieval mechanism: fetch relevant documents → pass them as context → generate an answer for the user query.
+•	This helps LLMs "ground" their responses on external sources at runtime, without re-training.
+•	However, RAG does not adapt the language model's parameters to retrieval usage; it's simply augmenting inputs.
+Retrieval augmented fine tuning (RAFT) is needed because:
+•	It explicitly fine-tunes the LLM to process, reason over, and generate responses based on retrieved documents for generating faithful responses.
+•	RAFT teaches the model how to align its outputs with the retrieved evidence.
+•	It reduces hallucinations, improves factual accuracy, and ensures the model doesn’t “make up” things outside the given evidence.
+Problems with RAFT utilizing language modeling Loss:
+•	Treats all retrieved documents equally — cannot prioritize relevant documents.
+•	Optimizes at token-level, not sequence-level response quality.
+•	Fails to teach LLM to ignore irrelevant/noisy retrievals.
+•	No faithfulness guarantee — hallucination risk remains.
+•	There is a need and necessity for Reinforcement learning-based objective to teach LLMs how to prefer relevant retrievals.
+•	RL based learning should optimize response-level faithfulness and relevance, not just token accuracy which is robust against noisy retrievals.
+Problems with Traditional RAG:
+•  No Awareness of “Information Gaps”
+•	The model cannot tell when it is unsure or lacking information while answering a question.
+•	It doesn’t know when it needs help from external documents.
+•  Fixed Retrieval Timing
+•	Because of this, documents are retrieved at pre-set points, either before answering starts or after fixed steps.
+•	The model cannot decide to retrieve at the right moment when it actually needs more information.
+•  Wastes Resources with Unnecessary Retrievals
+•	Sometimes, retrievals happen even when the model already has the necessary information.
+•	This leads to wasted computational resources and slows down response times.
+•  Weak at Forming Good Search Queries
+•  For complex questions, the model may need more information during answer generation.
+•  there is a need for generating additional retrieval queries helps the model fetch missing or more specific information needed to complete complex, multi-step responses accurately.
+•  Can’t Adjust During Answering
+•	Once documents are retrieved, the model cannot update or correct the retrievals later, even if it realizes mid-way that it needs different or better information.
+•	This limits its ability to answer evolving or complex queries correctly.
+
+
+
+________________________________________
+Slide 3: Our Proposed Framework: A Unified Solution
+We present a lightweight, modular framework compatible with any Transformer-based LLM without requiring additional training. It integrates two complementary techniques:
+•	Policy-Optimized Retrieval-Augmented Generation (PORAG):
+
+o	PORAG (RL based fine-tuning technique) teaches LLMs how to use external retrieved information effectively by optimizing,  how to use retrieved documents during response generation.
+•	Adaptive Token-Layer Attention Scoring (ATLAS):
+•  Detects when and what to retrieve by analyzing the model’s internal attention patterns.
+•  Ensures retrieval happens only when needed, improving efficiency & relevance
+This core is enhanced by:
+CRITIC (Cache Reduction via Token-Importance Compression)
+•	Why it's needed: As context length grows, the model's KV cache becomes memory-heavy and slows down inference, making long-document reasoning inefficient.
+•	What CRITIC does: Dynamically removes less important tokens (based on attention scores) from the KV cache, ensuring faster, memory-efficient inference without losing essential context.
+Test-Time Inference Scaling Techniques:
+•	Depending on the complexity of the query, the model adjusts how deeply it reasons:
+o	For simple tasks, it gives fast responses with minimal computation.
+o	For complex tasks, it increases reasoning depth (more compute) to improve accuracy.
+•	Techniques like Self-Consistency, Best-of-N Sampling, and Monte Carlo Tree Search (MCTS) are used to refine outputs at test time, trading extra compute for better quality without retraining the model.
+
+•	•  Self-Consistency:
+Generate many answers → Choose the most common one.
+•	•  Best-of-N Sampling:
+Generate N answers → Pick the best quality one.
+•	•  Monte Carlo Tree Search (MCTS):
+Search through possible response paths → Find the best reasoning route.
