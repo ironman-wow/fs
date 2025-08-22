@@ -1,125 +1,131 @@
-Slide 1: Title Slide
-Scaling Test-Time Inference with Policy-Optimized, Dynamic Retrieval-Augmented Generation via KV Caching and Decoding
-Authors: Sakhinana Sagar Srinivas, Shivam Gupta, Akash Das, Venkataramana Runkana
-Affiliation: Tata Research
-Conference: ACM KDD 2025, Toronto
-________________________________________
-Slide 2: The Challenge with Retrieval-Augmented Generation (RAG)
+📑 Slide Deck (Bullet Points in Full Sentences)
+Slide 1 – Title
 
-•  Problem with Static Knowledge in LLMs:
-•	Pre-trained LLMs are trained on static datasets and can't dynamically incorporate up-to-date or domain-specific information.
-•	Fine-tuning LLMs helps, but it’s computationally expensive, slow, and still suffers from knowledge cut-off.
-•  RAG's Solution (But with Limitations):
-•	Retrieval-Augmented Generation (RAG) introduced a retrieval mechanism: fetch relevant documents → pass them as context → generate an answer for the user query.
-•	This helps LLMs "ground" their responses on external sources at runtime, without re-training.
-•	However, RAG does not teach the LLM how to make use of external information to generate accurate response.
+AI-Driven Recipe Optimization in Semiconductor Manufacturing
+A Physics-Informed Machine Learning Approach with Parameterized XPINNs
 
-•	Retrieval augmented fine tuning (RAFT) is needed because:
-•	It explicitly fine-tunes the LLM to process, reason over, and generate responses based on retrieved documents for generating faithful responses.
-•	RAFT teaches the LLM how to align its outputs with the retrieved evidence.
-•	It reduces hallucinations, improves factual accuracy, and ensures the LLM doesn’t “make up” things outside the given evidence.
-Problems with RAFT utilizing language modeling Loss:
-•	Treats all retrieved documents equally — cannot prioritize relevant documents.
-•	Optimizes at token-level, not sequence-level response quality.
-•	Fails to teach LLM to ignore irrelevant/noisy retrievals.
-•	No faithfulness guarantee — hallucination risk remains.
-•	There is a need and necessity for Reinforcement learning-based objective to teach LLMs how to prefer relevant retrievals.
-•	RL based learning should optimize response-level faithfulness and relevance, not just token accuracy which is robust against noisy retrievals.
-Problems with Traditional RAG:
-•  No Awareness of “Information Gaps”
-•	The LLM cannot tell when it is unsure or lacking information while answering a question.
-•	It doesn’t know when it needs help from external documents.
-•  Fixed Retrieval Timing
-•	documents are retrieved at pre-set points, either before answering starts or after fixed steps.
-•	The LLM cannot decide to retrieve at the right moment when it actually needs more information.
-•  Wastes Resources with Unnecessary Retrievals
-•	Sometimes, retrievals happen even when the LLM already has the necessary information.
-•	This leads to wasted computational resources and slows down response times.
-•  Poor at Forming Good Search Queries
-•  For complex questions, the LLM may need more information during answer generation.
-•  there is a need for generating additional retrieval queries which helps the LLM fetch missing or more specific information needed to complete complex, multi-step responses accurately.
-•  Can’t Adjust During Answering
-•	Once documents are retrieved, the LLM cannot update or correct the retrievals later, even if it realizes mid-way that it needs different or better information.
-•	This limits its ability to answer evolving or complex queries correctly.
+Presented by: [Your Name]
 
+Affiliation: [Your Institution/Company]
 
+Date: [Insert Date]
 
-________________________________________
-Slide 3: Our Proposed Framework: A Unified Solution
-We present a lightweight, modular framework compatible with any Transformer-based LLM without requiring additional training to effectively help LLMs reason over retrieved information, retrieve only when necessary, and generate faithful, efficient, and accurate responses.
-. It integrates two complementary techniques:
-•	Policy-Optimized Retrieval-Augmented Generation (PORAG):
+Slide 2 – Semiconductor Manufacturing Background
 
-o	PORAG (RL based fine-tuning technique) teaches LLMs how to use external retrieved information effectively to generate accurate response.
-•	Adaptive Token-Layer Attention Scoring (ATLAS):
-•  Detects when and what to retrieve by analyzing the LLM’s internal attention patterns.
-•  Ensures retrieval happens only when needed, improving efficiency & relevance
-This core is enhanced by:
-CRITIC (Cache Reduction via Token-Importance Compression)
-•	Why it's needed: As context length grows, the model's KV cache becomes memory-heavy and slows down inference, making long-document reasoning inefficient.
-•	What CRITIC does: Dynamically removes less important tokens (based on attention scores) from the KV cache, ensuring faster, memory-efficient inference without losing essential context.
-Test-Time Inference Scaling Techniques:
-•	Depending on the complexity of the query, the LLM adjusts how deeply it reasons:
-o	For simple tasks, it gives fast responses with minimal computation.
-o	For complex tasks, it increases reasoning depth (more compute) to improve accuracy.
-•	Techniques like Self-Consistency, Best-of-N Sampling, and Monte Carlo Tree Search (MCTS) are used to refine outputs at test time, trading extra compute for better quality without retraining the LLM.
+Semiconductor manufacturing involves hundreds of steps such as deposition, etching, and doping, each of which must be precisely controlled.
 
-•	•  Self-Consistency:
-Generate many answers → Choose the most common one.
-•	•  Best-of-N Sampling:
-Generate N answers → Pick the best quality one.
-•	•  Monte Carlo Tree Search (MCTS):
-Search through possible response paths → Find the best reasoning route.
+Every step is guided by a recipe, which specifies parameters such as wafer chuck temperature, chamber pressure, gas flow rates, plasma power, and process time.
 
- ________________________________________
-________________________________________
-________________________________________
-Slide 7: Experimental Setup
-•	Datasets: Three diverse benchmark datasets spanning distinct reasoning tasks:
-1.	HotpotQA: Contains Multi-hop question answering based on Wikipedia, each requires reasoning across multiple supporting documents to answer.
-2.	Gorilla: 
-o	Built to test tool usage capabilities of LLMs and reduce hallucination in function calling.
-o	Models must generate correct API calls based on natural language instructions 
+Even small variations in recipe parameters can lead to large changes in wafer quality, yield, and device performance.
 
-3.	PubMedQA: Biomedical question answering over scientific literature.
-Focuses on answering yes/no/maybe research questions using PubMed database(biomedical research articles)
-•	Models: Qwen2.5 (0.5B/1.5B/3B) and Llama 3.2 (1B/3B).
-•	Evaluation Metrics:
-o	HotpotQA uses EM and F1 scores for answers and supporting facts, with Joint EM/F1 assessing both together.
-o	Gorilla is evaluated by Overall Accuracy (AST match), Hallucination Errors for made-up APIs, and Wrong API Call Errors for incorrect API usage.
-o	PubMedQA is evaluated using Ternary Classification Accuracy and F1 Score across Yes, No, and Maybe answers.________________________________________
-Slide 8: Results: HotpotQA Performance
-(Insert Table 1 from the paper here)
-Model	Answer Prediction (EM)	Answer Prediction (F1)	Supporting Facts (EM)	Supporting Facts (F1)	Joint (EM)	Joint (F1)
-PORAG+ATLAS (Proposed)	65.37	78.40	60.21	82.01	45.29	71.32
-RAG-base	52.10	64.02	44.21	61.28	34.88	49.10
-Key Findings:
-•	Our proposed PORAG+ATLAS framework achieves state-of-the-art results.
-•	It delivers substantial improvements over the RAG-base baseline, with a +10.41% increase in Joint EM and a +22.22% increase in Joint F1.
-•	This demonstrates superior performance in both retrieval precision and generation accuracy.
-________________________________________
-Slide 9: Results: Gorilla & PubMedQA Performance
-(Insert Table 2 and Table 3 from the paper here)
-Gorilla: API-Aware Code Generation
-| Model | Overall Accuracy (%) | Hallucination Error (%) | Wrong API Call Error (%) |
-| :--- | :--- | :--- | :--- |
-| PORAG+ATLAS (Proposed) | 76.38 | 5.31 | 4.98 |
-| RAG-base | 62.12 | 10.70 | 9.58 |
-•	Finding: Achieves 76.38% accuracy while reducing critical errors by nearly half compared to the baseline.
-PubMedQA: Biomedical Reasoning
-| Model | Accuracy (%) | F1 Score (%) |
-| :--- | :--- | :--- |
-| PORAG+ATLAS (Proposed) | 78.35 | 74.56 |
-| RAG-base | 60.70 | 59.30 |
-•	Finding: Outperforms RAG-base by +17.65% in accuracy and +15.26% in F1 score.
-________________________________________
-Slide 10: Conclusion
-We presented a plug-and-play, integrated framework that enhances RAG systems through the synergistic combination of PORAG and ATLAS.
-•	Proven Performance: Our approach demonstrates significant improvements in factual accuracy, reduction of hallucinations, and computational efficiency across diverse and challenging benchmarks.
-•	Flexible and Scalable: The framework is a lightweight and scalable solution compatible with any Transformer-based language model.
-•	Impact: This work represents a substantial advancement for developing robust, efficient, and scalable RAG systems for real-world, knowledge-intensive NLP tasks.
-________________________________________
-Slide 11: Thank You & Questions
-Thank you for your attention.
-Questions?
+Slide 3 – What is a Recipe?
 
+A recipe is a digital instruction file that tells the process equipment exactly how to carry out a step in semiconductor fabrication.
+
+For example, a plasma etching recipe might specify a chuck temperature of 60 °C, a chamber pressure of 20 mTorr, argon and CF₄ gas flows of 50 and 30 sccm, and an RF power of 200 W for a fixed time.
+
+These recipe instructions directly control material removal or deposition and therefore determine outcomes such as film thickness, uniformity, stress, and defect formation.
+
+Slide 4 – Why Optimize Recipes?
+
+Traditional recipe optimization relies on trial-and-error experiments, which are slow and can take weeks or months to stabilize a single process.
+
+This approach is also expensive, since wafers, gases, and energy are consumed during experimental runs, much of which ends up wasted.
+
+As device dimensions shrink, recipes involve more interdependent parameters, which makes manual optimization impractical and motivates the need for automated, physics-aware methods.
+
+Slide 5 – Physics Behind Recipe Steps
+
+Wafer processing involves thermal physics, which governs heat conduction in the wafer and chamber walls.
+
+Chemical vapor deposition controls how gas species are transported and react on the wafer surface to form solid films.
+
+Plasma etching removes material through a combination of ion bombardment and surface chemistry.
+
+Thin films generate mechanical stress, which can lead to warping or cracking of the wafer.
+
+Dopants diffuse within the wafer and defects form or heal during thermal cycles.
+
+Electrical properties depend on charge carrier transport, which is influenced by all the other physics.
+
+Slide 6 – Mathematical Model
+
+Heat transfer is described by the heat equation, which models how temperature changes with conduction and heating sources.
+
+Mass transport and chemical reactions are modeled with diffusion–reaction equations that describe how gas species spread and react.
+
+Film growth or etching is represented by a thickness evolution equation that depends on gas concentration and temperature.
+
+Stress is modeled by mechanical equilibrium equations that balance forces within thin films.
+
+Dopant diffusion follows Fick’s law with concentration-dependent diffusivity.
+
+Electrical transport is described by drift–diffusion equations for electrons and holes under electric fields.
+
+Slide 7 – Why Traditional Simulation Struggles
+
+The equations describing these processes are highly nonlinear and tightly coupled, which makes them computationally expensive to solve.
+
+Some processes involve moving boundaries, such as changing film thickness, which adds further complexity.
+
+Recipe optimization involves exploring a high-dimensional space of parameters such as temperature, pressure, gas composition, and plasma power.
+
+Classical numerical solvers can take hours or days to simulate one recipe, which is too slow for practical optimization in semiconductor fabs.
+
+Slide 8 – Parameterized XPINN (pXPINN)
+
+An Extended Physics-Informed Neural Network (XPINN) is a neural model trained to satisfy both physics equations and available data, ensuring its predictions are physically consistent.
+
+A parameterized XPINN (pXPINN) goes further by including recipe parameters such as chuck temperature, chamber pressure, and gas flows directly as inputs to the network.
+
+This allows a single trained model to cover an entire family of recipes, rather than needing a separate model for each set of conditions.
+
+The modular structure couples specialist networks (thermal, CVD, stress, etc.), with outputs from one physics block feeding into the next to preserve dependencies.
+
+The result is a generalizable model that predicts wafer outcomes under new recipe settings with high accuracy.
+
+Slide 9 – Workflow with pXPINN and PINO
+
+First, the ranges of recipe parameters such as temperature, pressure, and gas flows are defined for the process of interest.
+
+The pXPINN is trained on both physics equations and sparse wafer data, taking coordinates and recipe parameters as inputs and predicting outputs such as temperature, film thickness, and stress.
+
+Once trained, the pXPINN can generate a large dataset of wafer outcomes across the recipe space.
+
+A Physics-Informed Neural Operator (PINO) is then trained on this dataset to act as a fast surrogate model that runs in milliseconds.
+
+Optimization algorithms use the PINO to search for recipes that maximize objectives like uniformity and minimize issues such as defects, while respecting safety and equipment constraints.
+
+Slide 10 – Advantages of the Parameterized XPINN Approach
+
+Because the model includes physics equations in its training, its predictions are physically consistent even when experimental data are limited.
+
+By including recipe parameters as inputs, the pXPINN can generalize across a wide range of recipes with a single network.
+
+The modular design means that new physics modules, such as defect dynamics or plasma charging, can be added without redesigning the entire model.
+
+The direct mapping from recipe settings to wafer outcomes allows engineers to understand how recipe choices influence performance.
+
+Slide 11 – Benefits of Automated Recipe Optimization
+
+Automated optimization reduces development time, shortening recipe tuning from several weeks to just a few days.
+
+It lowers costs by minimizing wasted wafers and reducing the consumption of process gases and energy.
+
+It improves manufacturing yield by producing wafers with more uniform films, lower stress, and fewer defects.
+
+The approach scales across multiple process modules, so it can be applied to deposition, etching, doping, and beyond.
+
+It is also more sustainable, since it reduces the overall environmental footprint of semiconductor fabrication.
+
+Slide 12 – Conclusion and Future Work
+
+Recipe optimization is a critical challenge in advanced semiconductor manufacturing, where traditional trial-and-error methods are too slow and costly.
+
+Parameterized XPINNs combined with PINO surrogates provide a powerful, physics-informed machine learning framework for solving this challenge.
+
+This approach enables faster process development, lower costs, higher yields, and more sustainable production.
+
+Future work will focus on extending the method to include additional physics such as electromagnetics and plasma charging, and integrating it into closed-loop fab control systems.
+
+Ultimately, this framework transforms recipe optimization into a science-driven, AI-accelerated process that supports next-generation semiconductor devices.
