@@ -1,11 +1,19 @@
-Phase 1: Foundational Model Initialization
-The process originates with a General Purpose Pre-trained SLM. This model serves as the baseline, equipped with broad capabilities but lacking the specific expertise required for technical applications.
-Phase 2: Preference Alignment via Direct Preference Optimization (DPO)
-The foundational model is first refined using DPO. This stage aligns the model's behavior with human-defined preferences, enhancing the relevance, correctness, and style of its generated outputs without the need for complex reward modeling.
-Phase 3: Advanced Task-Specific Fine-Tuning
-Following initial alignment, the model undergoes further specialization through one of two distinct pathways to master complex, domain-specific tasks:
-Instruction-Tuned SLM: This path fine-tunes the model on curated datasets of instructions and desired responses, explicitly teaching it to follow complex commands and generate precise, structured outputs.
-Reinforcement Fine-Tuned SLM (GRPO): This path utilizes Group Relative Policy Optimization, a reinforcement learning technique. The model's policy is optimized directly against a reward function to improve performance on nuanced tasks that benefit from iterative, reward-guided learning.
-Phase 4: Model Compression and Efficiency Enhancement
-The final, optional stage involves Width and Depth Pruning. This structural optimization technique systematically removes less critical parameters (i.e., neurons and entire layers) from the fine-tuned model.
-The primary objective is to reduce the model's size and computational footprint, leading to improved inference latency and deployment efficiency with minimal degradation of task performance.
+1. Input Processing and Orchestration
+User Query Initiation: The process begins when a user submits a query.
+Safety and Compliance: The query first passes through Guardrails, which enforce safety protocols and content policies.
+Meta-Agent Coordination: A central Meta-Agent receives the validated query and orchestrates the entire response generation workflow.
+2. Core Reasoning and Contextual Retrieval
+Specialized SLM Engine: The Meta-Agent utilizes a specialized Instruction-tuned or Policy Optimized SLM as its primary reasoning engine.
+Retrieval-Augmented Generation (RAG): To provide factual and contextually aware responses, the SLM accesses two critical data sources:
+Memory Database: Stores conversational history and short-term context.
+Graph Database: A structured knowledge graph that enables the retrieval of deep, interconnected domain knowledge.
+Inference Acceleration: The generation process is enhanced with a suite of performance optimizations—including FlashAttention, Paged KV Caching, Look-ahead Decoding, and Test-Time Scaling—to ensure low latency and high throughput.
+3. Iterative Critique and Refinement Loop
+Initial Response Generation: The system produces an initial, unvalidated response.
+Critique-Agent Evaluation: This response is then assessed by a Critique-Agent, which leverages a comprehensive evaluation module composed of three distinct judges:
+SLM-as-a-judge: An autonomous language model assesses the response for logical coherence, style, and fluency.
+Reward Model-as-a-judge: A specialized model scores the output against predefined quality metrics (e.g., correctness, helpfulness).
+Human-as-a-judge: Provides human oversight and evaluation for the most critical or nuanced assessments.
+Feedback Integration: The collective judgment is synthesized into actionable Feedback, which is looped back to the Meta-Agent. This allows the system to iteratively refine and improve the response before finalizing it.
+4. Final Output Delivery
+After passing the rigorous critique and refinement cycle, the final, validated Output is delivered to the user, ensuring a high standard of accuracy and reliability.
